@@ -7,6 +7,4 @@ When ran for the first time, valgrind says that there are the following allocati
 ==31221==    by 0x4011F8: strip (check_whitespace.c:41)
 ==31221==    by 0x401264: is_clean (check_whitespace.c:62)
 ==31221==    by 0x4012EC: main (check_whitespace.c:88)
-7 allocations and 1 free, with the allocation problem seeming to start on character 41. 
-
-
+7 allocations and 1 free, with the allocation problem seeming to start on character 41. We track down the memory allocation from main, through is_clean, and see that "result" is being allocated some memory through a calloc() operation. We see that "result" is passed up from the "strip" command being called, and after "is_cleaned", is never called again, so we are free to deallocate the memory.

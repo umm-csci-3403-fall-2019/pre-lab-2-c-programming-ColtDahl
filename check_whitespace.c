@@ -60,13 +60,16 @@ int is_clean(char* str) {
   // We check if it's clean by calling strip and seeing if the
   // result is the same as the original string.
   cleaned = strip(str);
-
+  
   // strcmp compares two strings, returning a negative value if
   // the first is less than the second (in alphabetical order),
   // 0 if they're equal, and a positive value if the first is
   // greater than the second.
   result = strcmp(str, cleaned);
-
+  //Because "cleaned" was last used here, and the "result" (heh) from its
+  //use was passed up, it no longer needs memory allocated for it
+  free(cleaned);
+  
   return result == 0;
 }
 
@@ -89,7 +92,9 @@ int main() {
     } else {
       printf("The string '%s' is NOT clean.\n", strings[i]);
     }
+    
   }
+  ;
 
   return 0;
 }
